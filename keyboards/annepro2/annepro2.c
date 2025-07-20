@@ -29,7 +29,7 @@ static const SerialConfig led_uart_init_config = {
 };
 
 #ifndef LED_UART_BAUD_RATE
-#    define LED_UART_BAUD_RATE 115200
+#    define LED_UART_BAUD_RATE 57600
 #endif  // LED_UART_BAUD_RATE
 
 static const SerialConfig led_uart_runtine_config = {
@@ -289,4 +289,13 @@ bool process_record_kb(uint16_t keycode, keyrecord_t *record) {
         }
     }
     return process_record_user(keycode, record);
+}
+
+bool rgb_matrix_indicators_advanced_user(uint8_t led_min, uint8_t led_max) {
+    if (host_keyboard_led_state().caps_lock) {
+        RGB_MATRIX_INDICATOR_SET_COLOR(28, 255, 255, 255); // assuming caps lock is at led #28
+    } else {
+        RGB_MATRIX_INDICATOR_SET_COLOR(28, 0, 0, 0);
+    }
+    return false;
 }
